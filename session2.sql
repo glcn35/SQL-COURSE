@@ -1,0 +1,139 @@
+/*===================================================
+														WHERE
+====================================================*/
+
+	/*Composer'ı Jimi Hendrix olan şarkıları sorgulayiniz*/
+	SELECT name FROM tracks 
+	WHERE Composer = 'Jimi Hendrix';
+
+	/* invoices tablosunda Total değeri 10$ dan büyük olan faturaların tüm bilgilerini 
+	sorgulayiniz */
+	SELECT CustomerId, InvoiceDate, total FROM invoices 
+	WHERE total >10;
+	
+/*===================================================
+														LIMIT
+====================================================*/
+ 	/*invoices tablosunda Total değeri 10$'dan büyük olan ilk 4 kayıt'ın InvoiceId, 
+	InvoiceDate ve total bilgilerini sorgulayiniz */
+	SELECT InvoiceId, InvoiceDate,total
+	FROM invoices
+	WHERE total >10
+	LIMIT 4;
+	
+	
+/*===================================================
+													ORDER BY
+====================================================*/
+	
+	/*invoices tablosunda Total değeri 10$'dan büyük olan kayıtları Total değerine göre 
+	ARTAN sırada sıralayarak sorgulayiniz */
+SELECT *
+FROM invoices
+WHERE total > 10
+ORDER BY InvoiceDate DESC 
+LIMIT 10;
+
+/*===================================================
+								 LOGICAL OPERATORS (AND,OR,NOT)
+====================================================*/
+
+	/* invoices tablosunda ülkesi (BillingCountry) USA olmayan kayıtları total değerine
+	göre  AZALAN sırada listeyiniz */
+SELECT *
+FROM invoices
+WHERE NOT BillingCountry = "USA" ORDER BY total DESC;
+
+SELECT *
+FROM invoices
+WHERE BillingCountry <> "USA";
+
+SELECT *
+FROM invoices
+WHERE BillingCountry != "USA";
+
+
+	/* invoices tablosunda, ülkesi (BillingCountry) USA veya Germany olan kayıtları, 
+	InvoiceId sırasına göre artan sırada listeyiniz */ 
+	
+SELECT *
+FROM invoices
+WHERE BillingCountry  IN ("USA", "Germany") 
+ORDER BY InvoiceId ASC;
+
+	/* invoices tablosunda fatura tarihi (InvoiceDate) 01-01-2012 ile 03-01-2012 
+	tarihleri arasındaki faturaların tüm bilgilerini listeleyiniz */
+
+
+SELECT *
+FROM invoices
+WHERE InvoiceDate >= '2012-01-01' AND InvoiceDate <= '2012-01-03';
+
+SELECT *
+FROM invoices
+WHERE InvoiceDate >= '2012-01-01' AND InvoiceDate <= '2013-01-02 00.00.00';
+
+SELECT *
+FROM invoices
+WHERE InvoiceDate BETWEEN  '2012-01-01' AND '2013-01-02';
+
+
+/* invoices tablosunda fatura tarihi (InvoiceDate) 2009 ila 2011 tarihleri arasındaki
+	en yeni faturayı listeleyen sorguyu yazınız */ 
+SELECT *
+FROM invoices
+WHERE InvoiceDate BETWEEN  '2009-01-01 00:00:00' AND '2011-12-31 00:00:00' 
+ORDER BY InvoiceDate DESC 
+LIMIT 1;
+/*===================================================
+								                   IN
+====================================================*/
+	/* customers tablosunda Belgium, Norway veya  Canada  ülkelerinden sipariş veren
+		müşterilerin FirstName ve LastName bilgilerini listeyiniz	*/
+
+SELECT FirstName, LastName, country
+FROM customers
+WHERE country IN('Belgium','USA','Canada','Norway');
+
+SELECT FirstName, LastName, country
+FROM customers
+WHERE country like 'bE%';
+
+/*===================================================
+								                    LIKE
+====================================================*/
+	/* tracks tablosunda Composer sutunu Bach ile biten kayıtların Name bilgilerini 
+	listeyen sorguyu yazınız*/
+SELECT name, Composer
+FROM tracks
+WHERE Composer like '%Bach';
+
+/* albulms tablosunda Title (başlık) sutununda Greatest içeren kayıtların tüm bilgilerini 
+	listeyen sorguyu yazınız*/
+
+SELECT *
+FROM albums
+WHERE Title LIKE '%Greatest%';
+
+	/* invoices tablosunda, 2010 ve 2019 arası bir tarihte (InvoiceDate) Sadece şubat
+	aylarında gerçekleşmiş olan faturaların	tüm bilgilerini listeleyen sorguyu yazınız*/
+
+SELECT *
+FROM invoices
+WHERE InvoiceDate LIKE '201_-02%';
+
+/* customers tablosunda, isimleri (FirstName) üç harfli olan müşterilerin FirstName, 
+	LastName, City ve Address bilgilerini listeleyen sorguyu yazınız*/
+	
+	SELECT FirstName, LastName, City, Address
+	FROM customers
+	WHERE FirstName LIKE '___';
+	
+	
+	/* customers tablosunda, soyisimleri Sch veya Go ile başlayan müşterilerin FirstName, 
+	LastName ve City bilgilerini listeleyen sorguyu yazınız*/
+	SELECT FirstName,LastName,City FROM customers WHERE LastName like 'Sch%' OR LastName like 'Go%' ;
+
+
+	
+	
